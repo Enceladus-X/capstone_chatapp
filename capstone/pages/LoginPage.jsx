@@ -1,13 +1,30 @@
-import React from "react";
-import { Text, View } from "react-native"; 
+import React, { useEffect } from "react";
+import { View, Button, Pressable } from "react-native";
 
-function App() {
-  <View>
-    <Text>
-      로그인 페이지입니다
-    </Text>
-  </View>
- 
+function LoginPage({ navigation }) {
+  useEffect(() => {
+    const gotoHomePage = () => {
+      navigation.navigate("HomePage");
+    };
+  }, []);
+
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <Pressable
+        onPress={() => {
+          navigation.navigate("LoginPage");
+        }}
+        style={({ pressed }) => [
+          {
+            backgroundColor: pressed ? "gray" : "blue",
+            padding: 10,
+            borderRadius: 5,
+          },
+        ]}
+      >
+      </Pressable>
+    </View>
+  );
 }
 
-export default App;
+export default LoginPage;

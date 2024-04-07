@@ -1,24 +1,24 @@
-import React from "react";
-import { View, Image , StyleSheet} from "react-native";
+import React, { useEffect } from "react";
+import { View, Button } from "react-native";
+import button_custom from "../components/button_custom";
 
-const Loadingpage = () => {
-  <View style = {styles}>
-    <Text>
-      로드중입니다
-    </Text>
-  </View>;
-};
+function LoadingPage({ navigation }) {
+  useEffect(() => {
+    const gotoLoginpage = () => {
+      navigation.navigate("LoginPage");
+    };
+  }, []);
 
+  return (
+    <View style={{ flex: 1, justifyContent: "center", alignItems: "center" }}>
+      <button_custom
+        text="go to LoginPage"
+        onpress={() => {
+          navigation.navigate("LoginPage");
+        }}
+      />
+    </View>
+  );
+}
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: "#F5FCFF",
-    display: "flex",
-    justifyContent: "center",
-    alignItems: "center",
-  },
-
-});
-
-export default Loadingpage;
+export default LoadingPage;

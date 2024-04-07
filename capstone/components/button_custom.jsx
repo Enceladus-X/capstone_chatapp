@@ -1,7 +1,7 @@
 import React from "react";
-import { Pressable } from "react-native";
+import { Pressable , Text} from "react-native";
 
-const Button_Custom = ({ onpress, text }) => {
+const button_custom = ({ onpress, text }) => {
   return (
     <Pressable
       onpress={onpress}
@@ -10,11 +10,12 @@ const Button_Custom = ({ onpress, text }) => {
         borderRadius: 10,
         borderWidth: 1,
         alignItems: "center",
-        borderColor: line ? line : color,
-        backgroundColor: pressed ? color : "#ffffff",
       }}
     >
       <Text>{text}</Text>
     </Pressable>
   );
 };
+
+
+export default button_custom;
