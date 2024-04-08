@@ -2,7 +2,7 @@ import * as React from "react";
 import { Button } from "@rneui/base";
 
 
-export default ({onclick, title}) => {
+export default ({onpress, title}) => {
   return (
     <Button
       buttonStyle={{ width: 150 }}
@@ -16,7 +16,7 @@ export default ({onclick, title}) => {
       iconContainerStyle={{ background: "#000" }}
       loadingProps={{ animating: true }}
       loadingStyle={{}}
-      onPress= {onclick}
+      onPress= {onpress}
       title={title}
       titleProps={{}}
       titleStyle={{ marginHorizontal: 5 }}

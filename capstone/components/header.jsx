@@ -1,20 +1,24 @@
-import React from 'react';
+import * as React from "react";
+import {  Header,  Icon } from "@rneui/base";
 
-const styles = {
-  Header: {
-    top: '0px',
-    width: '100%',
-    height: '68px',
-    backgroundColor: '#f7f5ff',
-  },
-};
-
-const Header = (props) => {
+export default (text) => {
   return (
-    <div style={styles.Header}>
-      {props.children}
-    </div>
-  );
-};
+    <Header
+      backgroundImageStyle={{}}
+      barStyle="default"
+      centerComponent={{
+        text: {text},
+        style: { color: "#0a0a0a" }
+      }}
+      centerContainerStyle={{}}
+      containerStyle={{ width: "100%" }}
+      leftComponent={{ icon: "arrow-left", color: "#0a0a0a" }}
+      leftContainerStyle={{}}
+      linearGradientProps={{}}
+      placement="center"
+      backgroundColor="#aa93f3"
 
-export default Header;
+      statusBarProps={{}}
+    />
+  );
+}
