@@ -1,14 +1,37 @@
-import React from "react";
-import { Text, View } from "react-native"; 
+import React, { useEffect } from "react";
+import { View } from "react-native";
+import ButtonCustom from "../components/ButtonCustom";
+import Header from "../components/header";
 
-function App() {
-  <View>
-    <Text>
-      홈페이지입니다
-      
-    </Text>
-  </View>
- 
+function HomePage({ navigation }) {
+  useEffect(() => {}, []);
+
+  const gotoChatPage = () => {
+    navigation.navigate("ChatPage");
+  };
+
+  const gotoSettingPage = () => {
+    navigation.navigate("SettingPage");
+  };
+
+  return (
+    <View style={{ flex: 1 }}>
+      <Header text={"Home Page"} />
+
+      <ButtonCustom
+        onpress={() => {
+          gotoChatPage();
+        }}
+        title="go to Chat Page"
+      />
+      <ButtonCustom
+        onpress={() => {
+          gotoSettingPage();
+        }}
+        title="go to Setting Page"
+      />
+    </View>
+  );
 }
 
-export default App;
+export default HomePage;

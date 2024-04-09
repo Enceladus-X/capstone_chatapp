@@ -1,13 +1,25 @@
-import React from "react";
-import { Text, View } from "react-native"; 
+import React, { useEffect } from "react";
+import { View } from "react-native";
+import ButtonCustom from "../components/ButtonCustom";
+import Header from "../components/header";
 
-function App() {
-  <View>
-    <Text>
-      프로필 입력 페이지입니다
-    </Text>
-  </View>
- 
+function ProfileInputPage({ navigation }) {
+  useEffect(() => {}, []);
+
+  const gotoHomePage = () => {
+    navigation.navigate("HomePage");
+  };
+  return (
+    <View style={{ flex: 1 }}>
+      <Header text={"Profile Input Page"} />
+      <ButtonCustom
+        onpress={() => {
+          gotoHomePage();
+        }}
+        title="go to Home Page"
+      />
+    </View>
+  );
 }
 
-export default App;
+export default ProfileInputPage;

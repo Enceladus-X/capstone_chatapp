@@ -7,6 +7,9 @@ import LoadingPage from "../pages/LoadingPage";
 import ProfileInputPage from "../pages/ProfileInputPage";
 import SettingPage from "../pages/SettingPage";
 import HomePage from "../pages/HomePage";
+import ChatPage from "../pages/ChatPage";
+
+
 import { NavigationContainer } from "@react-navigation/native";
 
 const Stack = createNativeStackNavigator();
@@ -24,6 +27,7 @@ const AppNavigator = () => {
         <Stack.Screen name="ProfileInputPage" component={ProfileInputPage} />
         <Stack.Screen name="SettingPage" component={SettingPage} />
         <Stack.Screen name="HomePage" component={HomePage} />
+        <Stack.Screen name="ChatPage" component={ChatPage} />
       </Stack.Navigator>
     </NavigationContainer>
   );

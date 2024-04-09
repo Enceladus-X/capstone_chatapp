@@ -1,25 +1,22 @@
 import React, { useEffect } from "react";
-import { View, Button, Pressable } from "react-native";
+import { View } from "react-native";
 import ButtonCustom from "../components/ButtonCustom";
 import Header from "../components/header";
 
 function LoginPage({ navigation }) {
   useEffect(() => {}, []);
 
-  const gotoHomePage = () => {
-    navigation.navigate("HomePage");
+  const gotoProfileInputPage = () => {
+    navigation.navigate("ProfileInputPage");
   };
   return (
-    
-    <View style={{ flex: 1,}}>
-      <Header 
-        text = {"Login Page"}
-      />
+    <View style={{ flex: 1 }}>
+      <Header text={"Login Page"} />
       <ButtonCustom
         onpress={() => {
-          gotoHomePage();
+          gotoProfileInputPage();
         }}
-        title="go to Home Page"
+        title="go to Profile Input Page"
       />
     </View>
   );
