@@ -1,6 +1,8 @@
 import React from "react";
 import { Text, View } from "react-native";
 import Divider from "@mui/material/Divider";
+import LoadingPage from "./LoadingPage";
+import HomePage from "./HomePage";
 import {
   Button,
   FormControl,
@@ -14,7 +16,7 @@ import {
   Stack,
 } from "@mui/material";
 
-function App() {
+function App({ navigation }) {
   const styles = {
     headerText: {
       color: "#aa93f3",
@@ -151,12 +153,26 @@ function App() {
   };
 
   const SaveBackStack = () => {
+    const gotoLoadingPage = () => {
+      navigation.navigate(LoadingPage);
+    };
+
+    const gotoHomePage = () => {
+      navigation.navigate(HomePage);
+    };
+
     return (
       <Stack direction="row" spacing={2}>
-        <Button onClick={() => " "} variant="contained">
+        <Button onClick={() => gotoHomePage()} variant="contained">
           Save
         </Button>
-        <Button onClick={() => " "} variant="contained">
+
+        <Button
+          onClick={() => {
+            gotoLoadingPage();
+          }}
+          variant="contained"
+        >
           Back
         </Button>
       </Stack>
