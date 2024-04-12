@@ -11,7 +11,6 @@ function ProfileInputPage({ navigation }) {
   };
   return (
     <View style={{ flex: 1 }}>
-      <Header text={"Profile Input Page"} />
       <ButtonCustom
         onpress={() => {
           gotoHomePage();

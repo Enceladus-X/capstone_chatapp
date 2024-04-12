@@ -13,9 +13,7 @@ function LoadingPage({ navigation }) {
   return (
     
     <View>
-      <Header 
-        text={'Loding Page'}
-      />
+
       <ButtonCustom
         onpress={() => {
           gotoLoginpage();

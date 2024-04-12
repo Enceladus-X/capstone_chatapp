@@ -11,7 +11,6 @@ function LoginPage({ navigation }) {
   };
   return (
     <View style={{ flex: 1 }}>
-      <Header text={"Login Page"} />
       <ButtonCustom
         onpress={() => {
           gotoProfileInputPage();
