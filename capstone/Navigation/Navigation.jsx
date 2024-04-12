@@ -6,9 +6,8 @@ import LoginPage from "../pages/LoginPage";
 import LoadingPage from "../pages/LoadingPage";
 import ProfileInputPage from "../pages/ProfileInputPage";
 import SettingPage from "../pages/SettingPage";
-import HomePage from "../pages/HomePage";
 import ChatPage from "../pages/ChatPage";
-
+import HomePage from "../pages/HomePage";
 
 import { NavigationContainer } from "@react-navigation/native";
 
@@ -17,11 +16,7 @@ const Stack = createNativeStackNavigator();
 const AppNavigator = () => {
   return (
     <NavigationContainer>
-      <Stack.Navigator
-        screenOptions={{
-          headerShown: false,
-        }}
-      >
+      <Stack.Navigator>
         <Stack.Screen name="LoadingPage" component={LoadingPage} />
         <Stack.Screen name="LoginPage" component={LoginPage} />
         <Stack.Screen name="ProfileInputPage" component={ProfileInputPage} />
