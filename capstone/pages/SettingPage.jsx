@@ -2,6 +2,7 @@ import React from "react";
 import { Text, View } from "react-native";
 import Divider from "@mui/material/Divider";
 import {
+  Button,
   FormControl,
   Grid,
   InputLabel,
@@ -10,78 +11,65 @@ import {
   Slider,
   Switch,
   TextField,
+  Stack,
 } from "@mui/material";
 
 function App() {
-  const SettingHeader = () => {
-    return (
-      <Text
-        style={{
-          color: "#aa93f3",
-          fontSize: "24px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          lineHeight: "32px",
-          padding: "16px",
-        }}
-      >
-        Settings
-      </Text>
-    );
+  const styles = {
+    headerText: {
+      color: "#aa93f3",
+      fontSize: 24,
+      fontFamily: "Poppins",
+      fontWeight: 600,
+      lineHeight: 32,
+      padding: 16,
+    },
+    sectionText: {
+      color: "#030303",
+      fontSize: 16,
+      fontFamily: "Poppins",
+      fontWeight: 600,
+      lineHeight: 18,
+      padding: 16,
+    },
+    subitemText: {
+      color: "#030303",
+      fontSize: 16,
+      fontFamily: "Poppins",
+      lineHeight: 18,
+      padding: 8,
+      marginLeft: 4,
+      alignItems: "center",
+      justifyContent: "center",
+    },
+    sectionContainer: {
+      width: "90%",
+      marginBottom: 16,
+      marginLeft: 16,
+      marginRight: 16,
+    },
   };
 
-  const DividedHeader = (contents) => {
-    return (
-      <Text
-        style={{
-          color: "#030303",
-          fontSize: "14px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          lineHeight: "18px",
-          padding: "16px",
-        }}
-      >
-        {contents}
-      </Text>
-    );
+  const SettingHeader = () => {
+    return <Text style={styles.headerText}>Settings</Text>;
   };
-  const PersonalInfoHeader = () => {
-    return (
-      <Text
-        style={{
-          color: "#030303",
-          fontSize: "14px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          lineHeight: "18px",
-          padding: "16px",
-        }}
-      >
-        Personal Info
-      </Text>
-    );
+
+  const DividedHeader = ({ contents = "" }) => {
+    return <Text style={styles.sectionText}>{contents}</Text>;
   };
 
   const ChangeNicknameInput = () => {
     return (
       <Grid container spacing={2} alignContent={"center"}>
-        <Grid item xs={4}>
-          <Text>Nickname</Text>
+        <Grid item xs={4} alignContent={"center"} alignItems={"center"}>
+          <Text style={styles.subitemText}>Nickname</Text>
         </Grid>
         <Grid item xs={8}>
           <TextField
-            required
             id="USER_NICKNAME"
-            defaultValue="Nickname"
-            variant="filled"
+            label="Nickname"
             size="small"
-            style={{
-              width: "90%",
-              marginBottom: "16px",
-              marginLeft: "16px",
-              marginRight: "16px",
-            }}
+            style={styles.sectionContainer}
           />
         </Grid>
       </Grid>
@@ -92,20 +80,17 @@ function App() {
     return (
       <Grid container spacing={2} alignItems={"center"}>
         <Grid item xs={4}>
-          <Text>Gender</Text>
+          <Text style={styles.subitemText}>Gender</Text>
         </Grid>
         <Grid item xs={8}>
-          <FormControl
-            fullWidth
-            style={{
-              width: "90%",
-              marginBottom: "16px",
-              marginLeft: "16px",
-              marginRight: "16px",
-            }}
-          >
+          <FormControl fullWidth style={styles.sectionContainer}>
             <InputLabel id="USER_GENDER_LABEL">Gender</InputLabel>
-            <Select labelId="USER_GENDER_LABEL" id="USER_GENDER" label="Gender">
+            <Select
+              labelId="USER_GENDER_LABEL"
+              id="USER_GENDER"
+              label="Gender"
+              size="small"
+            >
               <MenuItem value="Male">Male</MenuItem>
               <MenuItem value="Female">Female</MenuItem>
               <MenuItem value="Others">Others</MenuItem>
@@ -120,7 +105,7 @@ function App() {
     return (
       <Grid container spacing={2} alignItems={"center"}>
         <Grid item xs={4}>
-          <Text>Age</Text>
+          <Text style={styles.subitemText}>Age</Text>
         </Grid>
         <Grid item xs={8}>
           <Slider
@@ -128,32 +113,10 @@ function App() {
             aria-label="Default"
             valueLabelDisplay="auto"
             color="#aa93f3"
-            style={{
-              width: "90%",
-              marginBottom: "16px",
-              marginLeft: "16px",
-              marginRight: "16px",
-            }}
+            style={styles.sectionContainer}
           />
         </Grid>
       </Grid>
-    );
-  };
-
-  const NotificationHeader = () => {
-    return (
-      <Text
-        style={{
-          color: "#030303",
-          fontSize: "14px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          lineHeight: "18px",
-          padding: "16px",
-        }}
-      >
-        Notifications
-      </Text>
     );
   };
 
@@ -161,7 +124,7 @@ function App() {
     return (
       <Grid container spacing={2}>
         <Grid item>
-          <Text>Push Notification</Text>
+          <Text style={styles.subitemText}>Push Notification</Text>
         </Grid>
         <Grid item xs>
           <Switch
@@ -171,23 +134,6 @@ function App() {
           />
         </Grid>
       </Grid>
-    );
-  };
-
-  const ThemeHeader = () => {
-    return (
-      <Text
-        style={{
-          color: "#030303",
-          fontSize: "14px",
-          fontFamily: "Poppins",
-          fontWeight: 600,
-          lineHeight: "18px",
-          padding: "16px",
-        }}
-      >
-        Theme
-      </Text>
     );
   };
 
@@ -195,16 +141,25 @@ function App() {
     return (
       <Grid container spacing={2}>
         <Grid item>
-          <Text>Dark Theme</Text>
+          <Text style={styles.subitemText}>Dark Theme</Text>
         </Grid>
         <Grid item xs>
-          <Switch
-            style={{
-              alignItems: "right",
-            }}
-          />
+          <Switch />
         </Grid>
       </Grid>
+    );
+  };
+
+  const SaveBackStack = () => {
+    return (
+      <Stack direction="row" spacing={2}>
+        <Button onClick={() => " "} variant="contained">
+          Save
+        </Button>
+        <Button onClick={() => " "} variant="contained">
+          Back
+        </Button>
+      </Stack>
     );
   };
 
@@ -212,16 +167,17 @@ function App() {
     <View>
       <SettingHeader />
       <Divider />
-      <DividedHeader/>
+      <DividedHeader contents="Personal Info" />
       <ChangeNicknameInput />
       <ChangeGenderSelect />
       <ChangeAgeInput />
       <Divider />
-      <NotificationHeader />
+      <DividedHeader contents="Notifications" />
       <PushNotification />
       <Divider />
-      <ThemeHeader />
+      <DividedHeader contents="Theme" />
       <ChangeTheme />
+      <SaveBackStack />
     </View>
   );
 }
