@@ -1,20 +1,19 @@
+import React from "react";
+import { App as SendbirdApp } from "sendbird-uikit";
+import "sendbird-uikit/dist/index.css";
 
-import React, { useEffect } from "react";
-import { View } from "react-native";
-import ButtonCustom from "../components/ButtonCustom";
-import Header from "../components/header";
+const APP_ID = "AD3842D8-FC26-42B4-BA66-54098A1BA28D";
+const USER_ID = "xogh7319";
 
-function SettingPage({ navigation }) {
-  useEffect(() => {}, []);
 
+function Chatpage() {
   return (
-    <View style={{ flex: 1 }}>
-      <Header text={"Setting Page"} />
-     
-    </View>
+    <div className="App">
+      <SendbirdApp
+        appId={APP_ID} 
+        userId={USER_ID} 
+      />
+    </div>
   );
 }
-
-export default SettingPage;
-
-
+export default Chatpage;
