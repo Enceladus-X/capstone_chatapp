@@ -1,27 +1,25 @@
-import React, { useEffect } from "react";
-import { View } from "react-native";
-import ButtonCustom from "../components/ButtonCustom";
-import Header from "../components/header";
+import React, { useEffect } from 'react'
+import { View } from 'react-native'
+import ButtonCustom from '../components/ButtonCustom'
+import Header from '../components/header'
 
 function LoadingPage({ navigation }) {
-  useEffect(() => {}, []);
+  useEffect(() => {}, [])
 
   const gotoLoginpage = () => {
-    navigation.navigate("LoginPage");
-  };
+    navigation.navigate('LoginPage')
+  }
 
   return (
-    
     <View>
-
       <ButtonCustom
         onpress={() => {
-          gotoLoginpage();
+          gotoLoginpage()
         }}
         title="go to LoginPage"
       />
     </View>
-  );
+  )
 }
 
-export default LoadingPage;
+export default LoadingPage
