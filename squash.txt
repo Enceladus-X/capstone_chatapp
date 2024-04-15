@@ -1,2 +1,0 @@
-1. create.txt 삭제
-2. squash.txt 생성
