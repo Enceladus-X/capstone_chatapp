@@ -1,2 +1,0 @@
-1. squash.txt 삭제
-2. rebase.txt 생성
