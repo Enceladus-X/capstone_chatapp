@@ -1,36 +1,27 @@
-import React, { useState } from 'react'
-import { View, Text, TextInput, Button, StyleSheet } from 'react-native'
+import React from 'react'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 
 function LoginPage({ navigation }) {
-  const [id, setId] = useState('')
-  const [password, setPassword] = useState('')
-
-  const handleLogin = () => {
-    // 여기에 로그인 처리 로직을 추가하세요.
+  const handleGoogleLogin = () => {
+    // 구글 로그인 처리 로직을 추가하세요.
     // 로그인 성공 시 HomePage.jsx로 이동하는 코드를 작성하세요.
     navigation.navigate('ProfileInputPage')
   }
 
   return (
     <View style={styles.container}>
-      <View style={styles.form}>
-        <Text>ID</Text>
-        <TextInput
-          style={styles.input}
-          value={id}
-          onChangeText={(text) => setId(text)}
-          placeholder="ID를 입력하세요"
+      <Image
+        source={require('../assets/images/logo.png')} // 이미지 파일의 경로를 지정합니다.
+        style={styles.image}
+      />
+
+      <TouchableOpacity style={styles.button} onPress={handleGoogleLogin}>
+        <Image
+          source={require('../assets/images/googleLogo.png')} // Google 로고 이미지 경로
+          style={styles.logo}
         />
-        <Text>Password</Text>
-        <TextInput
-          style={styles.input}
-          value={password}
-          onChangeText={(text) => setPassword(text)}
-          placeholder="비밀번호를 입력하세요"
-          secureTextEntry={true}
-        />
-        <Button title="Login" onPress={handleLogin} />
-      </View>
+        <Text style={styles.text}>구글로 로그인</Text>
+      </TouchableOpacity>
     </View>
   )
 }
@@ -38,21 +29,38 @@ function LoginPage({ navigation }) {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    justifyContent: 'center',
     alignItems: 'center',
-    // backgroundColor: 'tomato',
+    justifyContent: 'center',
+    // backgroundColor: 'lavender',
   },
-  form: {
-    width: '80%',
-    // backgroundColor: 'orange',
+  image: {
+    width: 200,
+    height: 200,
+    resizeMode: 'contain', // 이미지를 화면에 맞게 조정합니다.
+    marginBottom: 20, // 이미지와 버튼 사이의 간격 조정
+    marginLeft: 28,
   },
-  input: {
-    height: 40,
-    borderColor: 'gray',
-    borderWidth: 1,
-    marginBottom: 10,
-    paddingLeft: 10,
-    // backgroundColor: 'teal',
+  button: {
+    justifyContent: 'center',
+    backgroundColor: 'white',
+    flexDirection: 'row',
+    bottom: '15%',
+    position: 'absolute',
+    width: '60%',
+    borderRadius: 4,
+    shadowOpacity: 0.3,
+    shadowRadius: 4,
+    shadowColor: 'black',
+    shadowOffset: { height: 0, width: 0 },
+  },
+  logo: {
+    width: 20,
+    height: 20,
+    marginRight: 10,
+  },
+  text: {
+    fontWeight: 'bold',
+    color: 'black',
   },
 })
 

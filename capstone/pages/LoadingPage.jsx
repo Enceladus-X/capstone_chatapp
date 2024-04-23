@@ -1,5 +1,5 @@
 import React, { useEffect } from 'react'
-import { View, Image, StyleSheet, ActivityIndicator } from 'react-native'
+import { View, Image, StyleSheet } from 'react-native'
 import ButtonCustom from '../components/ButtonCustom'
 // import Header from '../components/AppbarCustom';
 
@@ -9,7 +9,7 @@ function LoadingPage({ navigation }) {
     // 일정 시간(예: 3초 후)이 지난 후에 자동으로 LoginPage로 이동
     const timer = setTimeout(() => {
       navigation.navigate('LoginPage')
-    }, 1500) // 1500ms = 1.5초
+    }, 10000) // 1500ms = 1.5초
 
     return () => clearTimeout(timer)
   }, [navigation])
@@ -26,7 +26,7 @@ function LoadingPage({ navigation }) {
         style={styles.image}
       />
       {/* 원 돌아가는 애니메이션 추가 */}
-      <ActivityIndicator size="large" color="gray" />
+      {/*<ActivityIndicator size="large" color="gray" />*/}
     </View>
   )
 }
