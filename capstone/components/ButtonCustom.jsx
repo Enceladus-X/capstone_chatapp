@@ -1,22 +1,25 @@
-import { Button } from "@rneui/base";
 import * as React from "react";
+import { Button } from "native-base";
 
-export default ({ onpress, title }) => {
-  const style = {
-    width: 150,
-    margin: 5,
-    borderRadius: 10,
-    borderWidth: 2,
-    justifyContent: "center",
-    alignItems: "center",
-  };
 
+export default ({onpress, title}) => {
   return (
-    <Button style={style} 
-
-      onPress={onpress}
+    <Button
+      buttonStyle={{ width: 150 }}
+      containerStyle={{ margin: 5 }}
+      disabledStyle={{
+        borderWidth: 2,
+        borderColor: "#00F",
+      }}
+      disabledTitleStyle={{ color: "#00F" }}
+      linearGradientProps={null}
+      iconContainerStyle={{ background: "#000" }}
+      loadingProps={{ animating: true }}
+      loadingStyle={{}}
+      onPress= {onpress}
       title={title}
-
+      titleProps={{}}
+      titleStyle={{ marginHorizontal: 5 }}
     />
   );
 };

@@ -1,201 +1,182 @@
-import React from "react";
-import { Text, View } from "react-native";
-import Divider from "@mui/material/Divider";
-import LoadingPage from "./LoadingPage";
-import HomePage from "./HomePage";
 import {
-  Button,
-  FormControl,
-  Grid,
-  InputLabel,
-  MenuItem,
-  Select,
-  Slider,
+  Container,
+  Flex,
+  Heading,
+  ScrollView,
+  VStack,
+  HStack,
   Switch,
-  TextField,
-  Stack,
-} from "@mui/material";
+  Select,
+  SelectItem,
+  CheckIcon,
+  AlertDialog,
+  Button,
+  Box,
+  Divider,
+  Toast,
+} from "native-base";
+import React, { useEffect, useState, useRef } from "react";
+import { Text, View } from "react-native";
+import { useNavigation } from "@react-navigation/native";
 
-function App({ navigation }) {
-  const styles = {
-    headerText: {
-      color: "#aa93f3",
-      fontSize: 24,
-      fontFamily: "Poppins",
-      fontWeight: 600,
-      lineHeight: 32,
-      padding: 16,
-    },
-    sectionText: {
-      color: "#030303",
-      fontSize: 16,
-      fontFamily: "Poppins",
-      fontWeight: 600,
-      lineHeight: 18,
-      padding: 16,
-    },
-    subitemText: {
-      color: "#030303",
-      fontSize: 16,
-      fontFamily: "Poppins",
-      lineHeight: 18,
-      padding: 8,
-      marginLeft: 4,
-      alignItems: "center",
-      justifyContent: "center",
-    },
-    sectionContainer: {
-      width: "90%",
-      marginBottom: 16,
-      marginLeft: 16,
-      marginRight: 16,
-    },
+function SettingPage() {
+  useEffect(() => {}, []);
+
+  const navigation = useNavigation(); 
+
+  const handleBack = () => {
+    navigation.goBack(); 
   };
 
-  const SettingHeader = () => {
-    return <Text style={styles.headerText}>Settings</Text>;
+  const handleSave = () => {
+    Toast.show({
+      description: "Settings saved.",
+      duration: 1000,
+      placement: "top"
+    });
+
   };
 
-  const DividedHeader = ({ contents = "" }) => {
-    return <Text style={styles.sectionText}>{contents}</Text>;
-  };
+  
 
-  const ChangeNicknameInput = () => {
+ 
+
+  const SettingItemsContainer = ({ children }) => {
     return (
-      <Grid container spacing={2} alignContent={"center"}>
-        <Grid item xs={4} alignContent={"center"} alignItems={"center"}>
-          <Text style={styles.subitemText}>Nickname</Text>
-        </Grid>
-        <Grid item xs={8}>
-          <TextField
-            id="USER_NICKNAME"
-            label="Nickname"
-            size="small"
-            style={styles.sectionContainer}
-          />
-        </Grid>
-      </Grid>
+      <Box bg="coolGray.100" p="4" rounded="md" shadow={2}>
+        {children}
+      </Box>
     );
   };
 
-  const ChangeGenderSelect = () => {
+  const SettingSwitchItem = ({ title, isEnabled, toggleSwitch }) => {
     return (
-      <Grid container spacing={2} alignItems={"center"}>
-        <Grid item xs={4}>
-          <Text style={styles.subitemText}>Gender</Text>
-        </Grid>
-        <Grid item xs={8}>
-          <FormControl fullWidth style={styles.sectionContainer}>
-            <InputLabel id="USER_GENDER_LABEL">Gender</InputLabel>
-            <Select
-              labelId="USER_GENDER_LABEL"
-              id="USER_GENDER"
-              label="Gender"
-              size="small"
-            >
-              <MenuItem value="Male">Male</MenuItem>
-              <MenuItem value="Female">Female</MenuItem>
-              <MenuItem value="Others">Others</MenuItem>
-            </Select>
-          </FormControl>
-        </Grid>
-      </Grid>
+      <HStack space={2} justifyContent="space-between" alignItems="center">
+        <Text fontSize="md" color="coolGray.800">
+          {title}
+        </Text>
+        <Switch isChecked={isEnabled} onToggle={toggleSwitch} />
+      </HStack>
     );
   };
 
-  const ChangeAgeInput = () => {
+  const Setting_Language = ({ label, selectedLanguage, onChange }) => {
     return (
-      <Grid container spacing={2} alignItems={"center"}>
-        <Grid item xs={4}>
-          <Text style={styles.subitemText}>Age</Text>
-        </Grid>
-        <Grid item xs={8}>
-          <Slider
-            defaultValue={20}
-            aria-label="Default"
-            valueLabelDisplay="auto"
-            color="#aa93f3"
-            style={styles.sectionContainer}
-          />
-        </Grid>
-      </Grid>
-    );
-  };
-
-  const PushNotification = () => {
-    return (
-      <Grid container spacing={2}>
-        <Grid item>
-          <Text style={styles.subitemText}>Push Notification</Text>
-        </Grid>
-        <Grid item xs>
-          <Switch
-            style={{
-              alignItems: "right",
-            }}
-          />
-        </Grid>
-      </Grid>
-    );
-  };
-
-  const ChangeTheme = () => {
-    return (
-      <Grid container spacing={2}>
-        <Grid item>
-          <Text style={styles.subitemText}>Dark Theme</Text>
-        </Grid>
-        <Grid item xs>
-          <Switch />
-        </Grid>
-      </Grid>
-    );
-  };
-
-  const SaveBackStack = () => {
-    const gotoLoadingPage = () => {
-      navigation.navigate(LoadingPage);
-    };
-
-    const gotoHomePage = () => {
-      navigation.navigate(HomePage);
-    };
-
-    return (
-      <Stack direction="row" spacing={2}>
-        <Button onClick={() => gotoHomePage()} variant="contained">
-          Save
-        </Button>
-
-        <Button
-          onClick={() => {
-            gotoLoadingPage();
+      <HStack space={3} justifyContent="space-between" alignItems="center">
+        <Text fontSize="md" color="coolGray.800">
+          {label}
+        </Text>
+        <Select
+          selectedValue={selectedLanguage}
+          width="70%"
+          accessibilityLabel="Choose Language"
+          placeholder="Choose Language"
+          _selectedItem={{
+            bg: "teal.600",
+            endIcon: <CheckIcon size="5" />,
           }}
-          variant="contained"
+          mt={1}
+          onValueChange={(itemValue) => onChange(itemValue)}
         >
-          Back
-        </Button>
-      </Stack>
+          <Select.Item label="English" value="en" />
+          <Select.Item label="Korean" value="ko" />
+        </Select>
+      </HStack>
     );
   };
 
-  return (
-    <View>
-      <SettingHeader />
-      <Divider />
-      <DividedHeader contents="Personal Info" />
-      <ChangeNicknameInput />
-      <ChangeGenderSelect />
-      <ChangeAgeInput />
-      <Divider />
-      <DividedHeader contents="Notifications" />
-      <PushNotification />
-      <Divider />
-      <DividedHeader contents="Theme" />
-      <ChangeTheme />
-      <SaveBackStack />
-    </View>
-  );
+  const TermsDialog = () => {
+    const [isOpen, setIsOpen] = useState(false);
+    const onClose = () => setIsOpen(false);
+    const cancelRef = useRef(null);
+
+    return (
+      <>
+        <HStack space={3} justifyContent="space-between" alignItems="center">
+          <Text fontSize="md" color="coolGray.800">
+            Terms & Conditions
+          </Text>
+          <Button variant="outline" onPress={() => setIsOpen(true)}>
+            Show Terms
+          </Button>
+        </HStack>
+        <AlertDialog
+          leastDestructiveRef={cancelRef}
+          isOpen={isOpen}
+          onClose={onClose}
+        >
+          <AlertDialog.Content>
+            <AlertDialog.CloseButton />
+            <AlertDialog.Header>Terms & Conditions</AlertDialog.Header>
+            <AlertDialog.Body>
+              이용 약관입니다
+            </AlertDialog.Body>
+            <AlertDialog.Footer>
+              <Button ref={cancelRef} onPress={onClose}>
+                Close
+              </Button>
+            </AlertDialog.Footer>
+          </AlertDialog.Content>
+        </AlertDialog>
+      </>
+    );
+  };
+
+  const SettingContents = () => {
+    const [isAlarmEnabled, setAlarmEnabled] = useState(false);
+    const [isVibrationEnabled, setVibrationEnabled] = useState(false);
+    const [isDarkModeEnabled, setDarkModeEnabled] = useState(false);
+    const [language, setLanguage] = useState("en");
+
+    return (
+      <ScrollView showsVerticalScrollIndicator={false}>
+        <VStack space={2.5} mt="4" px="8">
+          <Heading size="md">Settings</Heading>
+        </VStack>
+
+        <VStack space={4} mt={5} px={5}>
+          <SettingItemsContainer>
+            <SettingSwitchItem
+              title="Alarm"
+              isEnabled={isAlarmEnabled}
+              toggleSwitch={() => setAlarmEnabled(!isAlarmEnabled)}
+            />
+            <Divider my="2" />
+            <SettingSwitchItem
+              title="Vibration"
+              isEnabled={isVibrationEnabled}
+              toggleSwitch={() => setVibrationEnabled(!isVibrationEnabled)}
+            />
+            <Divider my="2" />
+            <SettingSwitchItem
+              title="Dark Mode"
+              isEnabled={isDarkModeEnabled}
+              toggleSwitch={() => setDarkModeEnabled(!isDarkModeEnabled)}
+            />
+          </SettingItemsContainer>
+          <SettingItemsContainer>
+            <Setting_Language
+              label="Language"
+              selectedLanguage={language}
+              onChange={setLanguage}
+            />
+          </SettingItemsContainer>
+          <SettingItemsContainer>
+            <TermsDialog />
+          </SettingItemsContainer>
+
+          <HStack space={3} px="5" py="5" justifyContent="flex-end">
+            <Button variant="ghost" onPress={handleBack}>
+              Back
+            </Button>
+            <Button onPress={handleSave}>Save</Button>
+          </HStack>
+        </VStack>
+      </ScrollView>
+    );
+  };
+
+  return <SettingContents />;
 }
 
-export default App;
+export default SettingPage;
