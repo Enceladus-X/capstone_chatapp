@@ -28,7 +28,6 @@ const Chat = () => {
           right: {
             padding: 10, // 오른쪽 말풍선의 padding
             backgroundColor: "#0084ff", // 오른쪽 말풍선 배경색
-            alignItems: "flex-end", // 오른쪽 말풍선을 오른쪽에 정렬
           },
         }}
       />
