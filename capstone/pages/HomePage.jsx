@@ -22,12 +22,14 @@ function AppBar_Home({ navigation }) {
   // 상태바 및 설정 버튼을 포함한 헤더 표시
   return (
     <>
-      <StatusBar bg="#3700B3" barStyle="light-content" /> // 상태바 설정
-      <Box safeAreaTop /> // 안전 영역 상단 공간 확보
+      <StatusBar bg="#3700B3" barStyle="light-content" />
+      <Box safeAreaTop />
       <HStack style={styles.header}>
         <Text color="white" fontSize="20" fontWeight="bold"></Text>
         <IconButton
-          icon={<Icon size="md" as={MaterialIcons} name="settings" color="black" />}
+          icon={
+            <Icon size="md" as={MaterialIcons} name="settings" color="black" />
+          }
           onPress={() => navigation.navigate("Setting")}
         />
       </HStack>
@@ -43,7 +45,8 @@ function HomePage({ navigation }) {
   // 채팅 페이지로 이동 처리 함수
   const gotoChatPage = () => {
     if (!nickname) {
-      toast.show({ // 닉네임 입력 안할 경우 경고 토스트 출력
+      toast.show({
+        // 닉네임 입력 안할 경우 경고 토스트 출력
         title: "Please enter your nickname!",
         status: "warning",
         color: "red",
@@ -65,7 +68,8 @@ function HomePage({ navigation }) {
             <VStack space="3" style={styles.innerContainer}>
               <Heading mb="3">Welcome to MAET!</Heading>
               <Text color="muted.400">
-                MAET is a nickname-based chat app! Enter your nickname and start chatting right away. Everyone is waiting to meet you!
+                MAET is a nickname-based chat app! Enter your nickname and start
+                chatting right away. Everyone is waiting to meet you!
               </Text>
               <Input
                 placeholder="Enter your nickname"
@@ -90,27 +94,27 @@ const styles = StyleSheet.create({
   header: {
     px: 1,
     py: 3,
-    justifyContent: 'space-between',
-    alignItems: 'center',
-    w: '100%'
+    justifyContent: "space-between",
+    alignItems: "center",
+    w: "100%",
   },
   container: {
     flex: 1,
-    alignContent: 'center',
-    justifyContent: 'center',
+    alignContent: "center",
+    justifyContent: "center",
     padding: 16,
   },
   keyboardView: {
-    base: '400px',
-    lg: 'auto',
+    base: "400px",
+    lg: "auto",
   },
   innerContainer: {
     flex: 1,
-    justifyContent: 'flex-end',
-    w: '100%',
-    maxW: '800',
+    justifyContent: "flex-end",
+    w: "100%",
+    maxW: "800",
     padding: 2,
-  }
+  },
 });
 
 export default HomePage;
