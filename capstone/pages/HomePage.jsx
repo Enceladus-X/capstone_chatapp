@@ -60,7 +60,7 @@ function HomePage({ navigation }) {
     if (nickname === "") {
       toast.show({
         title: "Please enter your nickname!",
-        status: "warning", // 여기 수정
+        status: "warning", 
         color: "red",
       });
     } else {
@@ -94,9 +94,9 @@ function HomePage({ navigation }) {
               maxW="800"
               padding={2}
             >
-              <Heading mb="3">Welcome to MATE!</Heading>
+              <Heading mb="3">Welcome to MAET!</Heading>
               <Text color="muted.400">
-                MATE is a nickname-based chat app! Enter your nickname and start
+                MAET is a nickname-based chat app! Enter your nickname and start
                 chatting right away. Everyone is waiting to meet you!
               </Text>
               <View
