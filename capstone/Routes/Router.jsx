@@ -3,7 +3,6 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 
 // Import page components
-import LoginPage from "../pages/LoginPage";
 import LoadingPage from "../pages/LoadingPage";
 import SettingPage from "../pages/SettingPage";
 import HomePage from "../pages/HomePage";
@@ -28,7 +27,6 @@ const AppNavigator = () => {
           component={LoadingPage}
           options={{ headerShown: false }} // No header
         />
-        <Stack.Screen name="Login" component={LoginPage} />
         <Stack.Screen
           name="Setting"
           component={SettingPage}
