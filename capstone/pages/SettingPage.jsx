@@ -15,6 +15,7 @@ import {
   Toast,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 // 스타일 통합 관리 객체
 const styles = {
@@ -47,18 +48,39 @@ function SettingPage() {
     vibration: false,
     darkMode: false,
     language: "en",
-    termsOpen: false // 약관 대화상자 상태
+    termsOpen: false
   });
   const cancelRef = useRef(null);
 
-  useEffect(() => {}, []);
+  useEffect(() => {
+    // 설정값 로드
+    loadSettings();
+  }, []);
 
-  const handleBack = () => navigation.goBack(); // 뒤로 가기 처리
-  const handleSave = () => Toast.show({ // 설정 저장 알림 처리
-    description: "Settings saved.",
-    duration: 1000,
-    placement: "top"
-  });
+  const loadSettings = async () => {
+    const jsonValue = await AsyncStorage.getItem('settings');
+    if (jsonValue != null) setSettings(JSON.parse(jsonValue));
+  };
+
+  const handleBack = () => navigation.goBack();
+
+  const handleSave = async () => {
+    try {
+      const jsonValue = JSON.stringify(settings);
+      await AsyncStorage.setItem('settings', jsonValue);
+      Toast.show({
+        description: "Settings saved.",
+        duration: 1000,
+        placement: "top"
+      });
+    } catch (e) {
+      Toast.show({
+        description: "Failed to save settings.",
+        duration: 1000,
+        placement: "top"
+      });
+    }
+  };
 
   // 설정 항목 컨테이너 컴포넌트
   const SettingItemsContainer = ({ children }) => (
