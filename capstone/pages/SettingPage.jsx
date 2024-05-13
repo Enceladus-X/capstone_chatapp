@@ -15,40 +15,18 @@ import {
   Toast,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
-import AsyncStorage from '@react-native-async-storage/async-storage';
-
-// 스타일 통합 관리 객체
-const styles = {
-  boxStyle: { // 박스 스타일 정의
-    bg: "coolGray.100",
-    p: "4",
-    rounded: "md",
-    shadow: 2
-  },
-  textStyle: { // 텍스트 스타일 정의
-    fontSize: "md",
-    color: "coolGray.800"
-  },
-  selectStyle: { // 선택 입력 필드 스타일 정의
-    width: "70%",
-    accessibilityLabel: "Choose Language",
-    placeholder: "Choose Language",
-    _selectedItem: {
-      bg: "teal.600",
-      endIcon: <CheckIcon size="5" />,
-    },
-    mt: 1,
-  }
-};
+import AsyncStorage from "@react-native-async-storage/async-storage";
+import { useAppContext } from "../AppContext"; // AppContext 훅 사용
 
 function SettingPage() {
-  const navigation = useNavigation(); 
+  const navigation = useNavigation();
+  const { darkMode, toggleDarkMode } = useAppContext(); // darkMode 상태와 토글 함수 가져오기
   const [settings, setSettings] = useState({
     alarm: false,
     vibration: false,
     darkMode: false,
     language: "en",
-    termsOpen: false
+    termsOpen: false,
   });
   const cancelRef = useRef(null);
 
@@ -58,7 +36,7 @@ function SettingPage() {
   }, []);
 
   const loadSettings = async () => {
-    const jsonValue = await AsyncStorage.getItem('settings');
+    const jsonValue = await AsyncStorage.getItem("settings");
     if (jsonValue != null) setSettings(JSON.parse(jsonValue));
   };
 
@@ -67,19 +45,36 @@ function SettingPage() {
   const handleSave = async () => {
     try {
       const jsonValue = JSON.stringify(settings);
-      await AsyncStorage.setItem('settings', jsonValue);
+      await AsyncStorage.setItem("settings", jsonValue);
       Toast.show({
         description: "Settings saved.",
         duration: 1000,
-        placement: "top"
+        placement: "top",
       });
     } catch (e) {
       Toast.show({
         description: "Failed to save settings.",
         duration: 1000,
-        placement: "top"
+        placement: "top",
       });
     }
+  };
+
+  const styles = {
+    scrollViewStyle: {
+      backgroundColor: darkMode ? "#333" : "#f5f5f5", // ScrollView 배경색
+    },
+    textStyle: {
+      color: darkMode ? "white" : "#2b2b2b", // 글자색
+    },
+    boxStyle: {
+      bg: darkMode ? "#444" : "coolGray.100", // 박스 배경색
+      p: "4",
+      rounded: "md",
+      shadow: 2,
+      borderColor: darkMode ? "#666" : "coolGray.300", // 테두리 색
+      borderWidth: 1,
+    },
   };
 
   // 설정 항목 컨테이너 컴포넌트
@@ -88,10 +83,13 @@ function SettingPage() {
   );
 
   // 스위치 버튼을 포함하는 설정 항목 컴포넌트
-  const SettingSwitchItem = ({ title, setting }) => (
+  const SettingSwitchItem = ({ title, setting, onToggle }) => (
     <HStack space={2} justifyContent="space-between" alignItems="center">
       <Text {...styles.textStyle}>{title}</Text>
-      <Switch isChecked={settings[setting]} onToggle={() => setSettings({ ...settings, [setting]: !settings[setting] })} />
+      <Switch
+        isChecked={setting === "darkMode" ? darkMode : settings[setting]}
+        onToggle={onToggle}
+      />
     </HStack>
   );
 
@@ -115,15 +113,29 @@ function SettingPage() {
     <>
       <HStack space={3} justifyContent="space-between" alignItems="center">
         <Text {...styles.textStyle}>Terms & Conditions</Text>
-        <Button variant="outline" onPress={() => setSettings({ ...settings, termsOpen: true })}>Show Terms</Button>
+        <Button
+          variant="outline"
+          onPress={() => setSettings({ ...settings, termsOpen: true })}
+        >
+          Show Terms
+        </Button>
       </HStack>
-      <AlertDialog leastDestructiveRef={cancelRef} isOpen={settings.termsOpen} onClose={() => setSettings({ ...settings, termsOpen: false })}>
+      <AlertDialog
+        leastDestructiveRef={cancelRef}
+        isOpen={settings.termsOpen}
+        onClose={() => setSettings({ ...settings, termsOpen: false })}
+      >
         <AlertDialog.Content>
           <AlertDialog.CloseButton />
           <AlertDialog.Header>Terms & Conditions</AlertDialog.Header>
           <AlertDialog.Body>이용 약관입니다</AlertDialog.Body>
           <AlertDialog.Footer>
-            <Button ref={cancelRef} onPress={() => setSettings({ ...settings, termsOpen: false })}>Close</Button>
+            <Button
+              ref={cancelRef}
+              onPress={() => setSettings({ ...settings, termsOpen: false })}
+            >
+              Close
+            </Button>
           </AlertDialog.Footer>
         </AlertDialog.Content>
       </AlertDialog>
@@ -132,27 +144,52 @@ function SettingPage() {
 
   // 설정 페이지의 주요 내용을 구성하는 컴포넌트
   const SettingContents = () => (
-    <ScrollView showsVerticalScrollIndicator={false}>
+    <ScrollView
+      style={styles.scrollViewStyle}
+      showsVerticalScrollIndicator={false}
+    >
       <VStack space={2.5} mt="4" px="8">
-        <Heading size="md">Settings</Heading>
+        <Heading size="md" color={styles.textStyle.color}>
+          Settings
+        </Heading>
       </VStack>
       <VStack space={4} mt={5} px={5}>
-        <SettingItemsContainer>
-          <SettingSwitchItem title="Alarm" setting="alarm" />
+        <Box {...styles.boxStyle}>
+          <SettingSwitchItem
+            title="Alarm"
+            setting="alarm"
+            onToggle={() =>
+              setSettings({ ...settings, alarm: !settings.alarm })
+            }
+          />
           <Divider my="2" />
-          <SettingSwitchItem title="Vibration" setting="vibration" />
+          <SettingSwitchItem
+            title="Vibration"
+            setting="vibration"
+            onToggle={() =>
+              setSettings({ ...settings, vibration: !settings.vibration })
+            }
+          />
           <Divider my="2" />
-          <SettingSwitchItem title="Dark Mode" setting="darkMode" />
-        </SettingItemsContainer>
-        <SettingItemsContainer>
+          <SettingSwitchItem
+            title="Dark Mode"
+            setting="darkMode"
+            onToggle={toggleDarkMode} // Use toggleDarkMode from AppContext
+          />
+        </Box>
+        <Box {...styles.boxStyle}>
           <Setting_Language />
-        </SettingItemsContainer>
-        <SettingItemsContainer>
+        </Box>
+        <Box {...styles.boxStyle}>
           <TermsDialog />
-        </SettingItemsContainer>
+        </Box>
         <HStack space={3} px="5" py="5" justifyContent="flex-end">
-          <Button variant="ghost" onPress={handleBack}>Back</Button>
-          <Button onPress={handleSave}>Save</Button>
+          <Button variant="ghost" onPress={handleBack} _text={styles.textStyle}>
+            Back
+          </Button>
+          <Button onPress={handleSave} _text={styles.textStyle}>
+            Save
+          </Button>
         </HStack>
       </VStack>
     </ScrollView>

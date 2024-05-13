@@ -16,6 +16,7 @@ import {
 } from "native-base";
 import React, { useState } from "react";
 import { Platform, View, StyleSheet } from "react-native";
+import { useAppContext } from "../AppContext"; // AppContext 훅 사용
 
 // 상단 앱 바 컴포넌트
 function AppBar_Home({ navigation }) {
@@ -41,7 +42,10 @@ function AppBar_Home({ navigation }) {
 function HomePage({ navigation }) {
   const [nickname, setNickname] = useState(""); // 닉네임 상태 관리
   const toast = useToast(); // 토스트 메시지 기능 활용
+  const { darkMode, toggleDarkMode } = useAppContext(); // darkMode 상태와 토글 함수 가져오기
 
+
+  
   // 채팅 페이지로 이동 처리 함수
   const gotoChatPage = () => {
     if (!nickname) {
@@ -57,17 +61,18 @@ function HomePage({ navigation }) {
   };
 
   return (
-    <View style={{ flex: 1 }}>
+    <View style={{ flex: 1, backgroundColor: darkMode ? "#333" : "#f5f5f5" }}>
       <AppBar_Home navigation={navigation} />
-      <View style={styles.container}>
+      <View style={{ flex: 1, justifyContent: "center", padding: 16 }}>
         <KeyboardAvoidingView
-          behavior={Platform.OS === "ios" ? "padding" : "height"} // 플랫폼에 따른 키보드 회피 동작 설정
-          style={styles.keyboardView}
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
         >
           <Center>
-            <VStack space="3" style={styles.innerContainer}>
-              <Heading mb="3">Welcome to MAET!</Heading>
-              <Text color="muted.400">
+            <VStack space="3">
+              <Heading mb="3" color={darkMode ? "white" : "black"}>
+                Welcome to MAET!
+              </Heading>
+              <Text color={darkMode ? "lightgray" : "gray"}>
                 MAET is a nickname-based chat app! Enter your nickname and start
                 chatting right away. Everyone is waiting to meet you!
               </Text>
@@ -76,7 +81,9 @@ function HomePage({ navigation }) {
                 mt="10"
                 mb="4"
                 value={nickname}
-                onChangeText={setNickname} // 입력된 텍스트를 닉네임 상태로 설정
+                onChangeText={setNickname}
+                placeholderTextColor={darkMode ? "lightgray" : "gray"}
+                color={darkMode ? "white" : "black"}
               />
               <Button mb="4" onPress={gotoChatPage}>
                 Go To Chat!
@@ -88,7 +95,6 @@ function HomePage({ navigation }) {
     </View>
   );
 }
-
 // 스타일 정의를 위한 StyleSheet 객체
 const styles = StyleSheet.create({
   header: {
