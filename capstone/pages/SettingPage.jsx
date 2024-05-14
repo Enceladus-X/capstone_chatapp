@@ -16,6 +16,7 @@ import {
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { useAppContext } from "../AppContext"; // AppContext 훅 사용
+import termsAndConditions from "../assets/terms"; // 이용 약관 import
 
 function SettingPage() {
   const navigation = useNavigation();
@@ -170,7 +171,11 @@ function SettingPage() {
         <AlertDialog.Content {...styles.dialogStyle}>
           <AlertDialog.CloseButton />
           <AlertDialog.Header {...styles.dialogStyle}>Terms & Conditions</AlertDialog.Header>
-          <AlertDialog.Body {...styles.dialogStyle}>이용 약관입니다</AlertDialog.Body>
+          <AlertDialog.Body {...styles.dialogStyle}>
+            {settings.language === "en"
+              ? termsAndConditions.english
+              : termsAndConditions.korean}
+          </AlertDialog.Body>
           <AlertDialog.Footer {...styles.dialogStyle}>
             <Button
               ref={cancelRef}
