@@ -6,7 +6,6 @@ import {
   HStack,
   Switch,
   Select,
-  SelectItem,
   CheckIcon,
   AlertDialog,
   Button,
@@ -65,7 +64,7 @@ function SettingPage() {
       backgroundColor: darkMode ? "#333" : "#f5f5f5", // ScrollView 배경색
     },
     textStyle: {
-      color: darkMode ? "white" : "#2b2b2b", // 글자색
+      color: darkMode ? "#fff" : "#2b2b2b", // 글자색
     },
     boxStyle: {
       bg: darkMode ? "#444" : "coolGray.100", // 박스 배경색
@@ -74,6 +73,41 @@ function SettingPage() {
       shadow: 2,
       borderColor: darkMode ? "#666" : "coolGray.300", // 테두리 색
       borderWidth: 1,
+    },
+    buttonStyle: {
+      bg: darkMode ? "#666" : "#0084ff",
+      _text: {
+        color: "#fff",
+      },
+    },
+    switchStyle: {
+      onTrackColor: darkMode ? "#bbb" : "#81b0ff",
+      onThumbColor: darkMode ? "#444" : "#0084ff",
+      _hover: {
+        onTrackColor: darkMode ? "#bbb" : "#81b0ff",
+        onThumbColor: darkMode ? "#444" : "#0084ff",
+      },
+    },
+    dialogStyle: {
+      bg: darkMode ? "#444" : "#fff",
+      _text: {
+        color: darkMode ? "#fff" : "#000",
+      },
+    },
+    selectStyle: {
+      base: {
+        bg: darkMode ? "#444" : "#fff",
+        color: darkMode ? "#fff" : "#000",
+      },
+      item: {
+        bg: darkMode ? "#555" : "#fff",
+        _text: {
+          color: darkMode ? "#fff" : "#000",
+        },
+        _hover: {
+          bg: darkMode ? "#666" : "#f0f0f0",
+        },
+      },
     },
   };
 
@@ -85,10 +119,13 @@ function SettingPage() {
   // 스위치 버튼을 포함하는 설정 항목 컴포넌트
   const SettingSwitchItem = ({ title, setting, onToggle }) => (
     <HStack space={2} justifyContent="space-between" alignItems="center">
-      <Text {...styles.textStyle}>{title}</Text>
+      <Text style={styles.textStyle}>{title}</Text>
       <Switch
         isChecked={setting === "darkMode" ? darkMode : settings[setting]}
         onToggle={onToggle}
+        onTrackColor={styles.switchStyle.onTrackColor}
+        onThumbColor={styles.switchStyle.onThumbColor}
+        _hover={styles.switchStyle._hover}
       />
     </HStack>
   );
@@ -96,14 +133,18 @@ function SettingPage() {
   // 언어 선택을 위한 설정 항목 컴포넌트
   const Setting_Language = () => (
     <HStack space={3} justifyContent="space-between" alignItems="center">
-      <Text {...styles.textStyle}>Language</Text>
+      <Text style={styles.textStyle}>Language</Text>
       <Select
         selectedValue={settings.language}
         onValueChange={(value) => setSettings({ ...settings, language: value })}
-        {...styles.selectStyle}
+        _selectedItem={{
+          ...styles.selectStyle.item,
+          endIcon: <CheckIcon size="5" color={darkMode ? "#fff" : "#000"} />,
+        }}
+        style={styles.selectStyle.base}
       >
-        <Select.Item label="English" value="en" />
-        <Select.Item label="Korean" value="ko" />
+        <Select.Item label="English" value="en" _text={styles.selectStyle.item._text} />
+        <Select.Item label="Korean" value="ko" _text={styles.selectStyle.item._text} />
       </Select>
     </HStack>
   );
@@ -112,10 +153,11 @@ function SettingPage() {
   const TermsDialog = () => (
     <>
       <HStack space={3} justifyContent="space-between" alignItems="center">
-        <Text {...styles.textStyle}>Terms & Conditions</Text>
+        <Text style={styles.textStyle}>Terms & Conditions</Text>
         <Button
           variant="outline"
           onPress={() => setSettings({ ...settings, termsOpen: true })}
+          {...styles.buttonStyle}
         >
           Show Terms
         </Button>
@@ -125,14 +167,15 @@ function SettingPage() {
         isOpen={settings.termsOpen}
         onClose={() => setSettings({ ...settings, termsOpen: false })}
       >
-        <AlertDialog.Content>
+        <AlertDialog.Content {...styles.dialogStyle}>
           <AlertDialog.CloseButton />
-          <AlertDialog.Header>Terms & Conditions</AlertDialog.Header>
-          <AlertDialog.Body>이용 약관입니다</AlertDialog.Body>
-          <AlertDialog.Footer>
+          <AlertDialog.Header {...styles.dialogStyle}>Terms & Conditions</AlertDialog.Header>
+          <AlertDialog.Body {...styles.dialogStyle}>이용 약관입니다</AlertDialog.Body>
+          <AlertDialog.Footer {...styles.dialogStyle}>
             <Button
               ref={cancelRef}
               onPress={() => setSettings({ ...settings, termsOpen: false })}
+              {...styles.buttonStyle}
             >
               Close
             </Button>
@@ -187,7 +230,7 @@ function SettingPage() {
           <Button variant="ghost" onPress={handleBack} _text={styles.textStyle}>
             Back
           </Button>
-          <Button onPress={handleSave} _text={styles.textStyle}>
+          <Button onPress={handleSave} {...styles.buttonStyle}>
             Save
           </Button>
         </HStack>
