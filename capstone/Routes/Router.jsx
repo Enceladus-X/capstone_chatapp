@@ -15,6 +15,7 @@ const defaultScreenOptions = {
   headerStyle: {
     height: 45,
   },
+  headerShown: false, // No header for all screens by default
 };
 
 const AppNavigator = () => {
@@ -22,21 +23,9 @@ const AppNavigator = () => {
     <NavigationContainer>
       <Stack.Navigator screenOptions={defaultScreenOptions}>
         {/* Screen configurations */}
-        <Stack.Screen
-          name="Loading"
-          component={LoadingPage}
-          options={{ headerShown: false }} // No header
-        />
-        <Stack.Screen
-          name="Setting"
-          component={SettingPage}
-          options={{ headerShown: false }} // No header
-        />
-        <Stack.Screen
-          name="Home"
-          component={HomePage}
-          options={{ headerShown: false }} // No header
-        />
+        <Stack.Screen name="Loading" component={LoadingPage} />
+        <Stack.Screen name="Setting" component={SettingPage} />
+        <Stack.Screen name="Home" component={HomePage} />
         <Stack.Screen name="Chat" component={ChatPage} />
       </Stack.Navigator>
     </NavigationContainer>
