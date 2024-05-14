@@ -20,16 +20,18 @@ import { useAppContext } from "../AppContext"; // AppContext 훅 사용
 
 // 상단 앱 바 컴포넌트
 function AppBar_Home({ navigation }) {
+  const { darkMode } = useAppContext(); // 다크 모드 상태 가져오기
+
   // 상태바 및 설정 버튼을 포함한 헤더 표시
   return (
     <>
-      <StatusBar bg="#3700B3" barStyle="light-content" />
+      <StatusBar bg={darkMode ? "#333" : "#f5f5f5"} barStyle="light-content" />
       <Box safeAreaTop />
-      <HStack style={styles.header}>
+      <HStack style={[styles.header, { backgroundColor: darkMode ? "#333" : "#f5f5f5" }]}>
         <Text color="white" fontSize="20" fontWeight="bold"></Text>
         <IconButton
           icon={
-            <Icon size="md" as={MaterialIcons} name="settings" color="black" />
+            <Icon size="md" as={MaterialIcons} name="settings" color={darkMode ? "white" : "black"} />
           }
           onPress={() => navigation.navigate("Setting")}
         />
@@ -42,10 +44,8 @@ function AppBar_Home({ navigation }) {
 function HomePage({ navigation }) {
   const [nickname, setNickname] = useState(""); // 닉네임 상태 관리
   const toast = useToast(); // 토스트 메시지 기능 활용
-  const { darkMode, toggleDarkMode } = useAppContext(); // darkMode 상태와 토글 함수 가져오기
+  const { darkMode } = useAppContext(); // darkMode 상태 가져오기
 
-
-  
   // 채팅 페이지로 이동 처리 함수
   const gotoChatPage = () => {
     if (!nickname) {
@@ -85,8 +85,8 @@ function HomePage({ navigation }) {
                 placeholderTextColor={darkMode ? "lightgray" : "gray"}
                 color={darkMode ? "white" : "black"}
               />
-              <Button mb="4" onPress={gotoChatPage}>
-                Go To Chat!
+              <Button mb="4" onPress={gotoChatPage} backgroundColor={darkMode ? "#555" : "#0084ff"}>
+                <Text color="white">Go To Chat!</Text>
               </Button>
             </VStack>
           </Center>
@@ -95,6 +95,7 @@ function HomePage({ navigation }) {
     </View>
   );
 }
+
 // 스타일 정의를 위한 StyleSheet 객체
 const styles = StyleSheet.create({
   header: {
@@ -103,6 +104,7 @@ const styles = StyleSheet.create({
     justifyContent: "space-between",
     alignItems: "center",
     w: "100%",
+    borderBottomWidth: 0, // 외곽선 제거
   },
   container: {
     flex: 1,
