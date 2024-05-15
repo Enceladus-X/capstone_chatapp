@@ -1,0 +1,18 @@
+<안드로이드 스튜디오>
+
+1. 빌드 시  Caused by: org.codehaus.groovy.syntax.SyntaxException: Operator ("===" at 202:19:  "===" ) not supported @ line 202, column 19. 라는 오류 발생
+
+https://stackoverflow.com/questions/13129994/org-codehaus-groovy-control-multiplecompilationerrorsexception-startup-failed 참고하여 해결시도
+
+gradle jdk를 임베디드 jdk로 변경 후 시도 >> 해결안됨
+
+gradle 버전을 8.7로 설정 후 시도 >> 해결안된듯? 다른 문제 발생
+
+
+2.  Gradle sync failed: Cannot invoke method getAbsolutePath() on null object 오류 발생
+
+ 
+https://github.com/expo/expo/issues/17853 를 참고하여 해결시도
+
+Gradle버전을 6.9rc로 변경 
+
