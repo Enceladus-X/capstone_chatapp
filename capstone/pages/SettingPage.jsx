@@ -1,5 +1,5 @@
 import React, { useEffect, useState, useRef } from "react";
-import { Text, ScrollView } from "react-native";
+import { ScrollView, Text as RNText } from "react-native";
 import {
   Box,
   VStack,
@@ -11,7 +11,8 @@ import {
   Button,
   Heading,
   Divider,
-  Toast,
+  useToast,
+  Text,
 } from "native-base";
 import { useNavigation } from "@react-navigation/native";
 import AsyncStorage from "@react-native-async-storage/async-storage";
@@ -29,6 +30,7 @@ function SettingPage() {
     termsOpen: false,
   });
   const cancelRef = useRef(null);
+  const toast = useToast();
 
   useEffect(() => {
     // 설정값 로드
@@ -46,16 +48,20 @@ function SettingPage() {
     try {
       const jsonValue = JSON.stringify(settings);
       await AsyncStorage.setItem("settings", jsonValue);
-      Toast.show({
+      toast.show({
         description: "Settings saved.",
         duration: 1000,
         placement: "top",
+        backgroundColor: darkMode ? "#333" : "#fff",
+        color: darkMode ? "#fff" : "#000",
       });
     } catch (e) {
-      Toast.show({
+      toast.show({
         description: "Failed to save settings.",
         duration: 1000,
         placement: "top",
+        backgroundColor: darkMode ? "#333" : "#fff",
+        color: darkMode ? "#fff" : "#000",
       });
     }
   };
@@ -78,7 +84,7 @@ function SettingPage() {
     buttonStyle: {
       bg: darkMode ? "#666" : "#0084ff",
       _text: {
-        color: "#fff",
+        color: darkMode ? "#fff" : "#fff", // 버튼 텍스트 색상 조정
       },
     },
     switchStyle: {
@@ -144,8 +150,16 @@ function SettingPage() {
         }}
         style={styles.selectStyle.base}
       >
-        <Select.Item label="English" value="en" _text={styles.selectStyle.item._text} />
-        <Select.Item label="Korean" value="ko" _text={styles.selectStyle.item._text} />
+        <Select.Item
+          label="English"
+          value="en"
+          _text={styles.selectStyle.item._text}
+        />
+        <Select.Item
+          label="Korean"
+          value="ko"
+          _text={styles.selectStyle.item._text}
+        />
       </Select>
     </HStack>
   );
@@ -160,7 +174,7 @@ function SettingPage() {
           onPress={() => setSettings({ ...settings, termsOpen: true })}
           {...styles.buttonStyle}
         >
-          Show Terms
+          <Text style={styles.buttonStyle._text}>Show Terms</Text>
         </Button>
       </HStack>
       <AlertDialog
@@ -170,11 +184,15 @@ function SettingPage() {
       >
         <AlertDialog.Content {...styles.dialogStyle}>
           <AlertDialog.CloseButton />
-          <AlertDialog.Header {...styles.dialogStyle}>Terms & Conditions</AlertDialog.Header>
+          <AlertDialog.Header {...styles.dialogStyle}>
+            <Text style={styles.dialogStyle._text}>Terms & Conditions</Text>
+          </AlertDialog.Header>
           <AlertDialog.Body {...styles.dialogStyle}>
-            {settings.language === "en"
-              ? termsAndConditions.english
-              : termsAndConditions.korean}
+            <RNText style={styles.dialogStyle._text}>
+              {settings.language === "en"
+                ? termsAndConditions.english
+                : termsAndConditions.korean}
+            </RNText>
           </AlertDialog.Body>
           <AlertDialog.Footer {...styles.dialogStyle}>
             <Button
@@ -182,7 +200,7 @@ function SettingPage() {
               onPress={() => setSettings({ ...settings, termsOpen: false })}
               {...styles.buttonStyle}
             >
-              Close
+              <Text style={styles.buttonStyle._text}>Close</Text>
             </Button>
           </AlertDialog.Footer>
         </AlertDialog.Content>
@@ -198,7 +216,7 @@ function SettingPage() {
     >
       <VStack space={2.5} mt="4" px="8">
         <Heading size="md" color={styles.textStyle.color}>
-          Settings
+          <Text style={styles.textStyle}>Settings</Text>
         </Heading>
       </VStack>
       <VStack space={4} mt={5} px={5}>
@@ -232,11 +250,11 @@ function SettingPage() {
           <TermsDialog />
         </Box>
         <HStack space={3} px="5" py="5" justifyContent="flex-end">
-          <Button variant="ghost" onPress={handleBack} _text={styles.textStyle}>
-            Back
+          <Button variant="ghost" onPress={handleBack}>
+            <Text style={styles.textStyle}>Back</Text>
           </Button>
           <Button onPress={handleSave} {...styles.buttonStyle}>
-            Save
+            <Text style={styles.buttonStyle._text}>Save</Text>
           </Button>
         </HStack>
       </VStack>

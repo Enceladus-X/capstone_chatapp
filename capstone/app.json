@@ -1,33 +1,33 @@
 {
   "expo": {
-    "name": "capstion",
-    "slug": "capstion",
+    "name": "re2",
+    "slug": "re2",
     "version": "1.0.0",
     "orientation": "portrait",
     "icon": "./assets/images/icon.png",
+    "userInterfaceStyle": "light",
     "splash": {
       "image": "./assets/images/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },
-    "updates": {
-      "fallbackToCacheTimeout": 0
-    },
-    "assetBundlePatterns": [
-      "**/*"
-    ],
     "ios": {
       "supportsTablet": true
     },
     "android": {
       "adaptiveIcon": {
-        "foregroundImage": "./assets/images/adaptive-icon.png",
-        "backgroundColor": "#FFFFFF"
+        "foregroundImage": "./assets/images/logoText.png",
+        "backgroundColor": "#ffffff"
       },
-      "package": "com.chat.app"
+      "package": "com.capstone13.hufs"
     },
     "web": {
       "favicon": "./assets/images/favicon.png"
+    },
+    "extra": {
+      "eas": {
+        "projectId": "feb7aace-7143-4a1f-8aae-b2126cb8e58f"
+      }
     }
   }
 }

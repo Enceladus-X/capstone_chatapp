@@ -1,4 +1,4 @@
-import { MaterialIcons } from "@expo/vector-icons";
+import { MaterialIcons } from "@expo/vector-icons"
 import {
   Box,
   HStack,
@@ -13,38 +13,50 @@ import {
   Heading,
   Input,
   useToast,
-} from "native-base";
-import React, { useState } from "react";
-import { Platform, View, StyleSheet } from "react-native";
-import { useAppContext } from "../AppContext"; // AppContext 훅 사용
+} from "native-base"
+import React, { useState } from "react"
+import { Platform, View, StyleSheet } from "react-native"
+import { useAppContext } from "../AppContext"
 
 // 상단 앱 바 컴포넌트
 function AppBar_Home({ navigation }) {
-  const { darkMode } = useAppContext(); // 다크 모드 상태 가져오기
+  const { darkMode } = useAppContext() // 다크 모드 상태 가져오기
 
   // 상태바 및 설정 버튼을 포함한 헤더 표시
   return (
     <>
       <StatusBar bg={darkMode ? "#333" : "#f5f5f5"} barStyle="light-content" />
       <Box safeAreaTop />
-      <HStack style={[styles.header, { backgroundColor: darkMode ? "#333" : "#f5f5f5" }]}>
-        <Text color="white" fontSize="20" fontWeight="bold"></Text>
+      <HStack
+        style={[
+          styles.header,
+          { backgroundColor: darkMode ? "#333" : "#f5f5f5" },
+        ]}
+      >
+        <Text color="white" fontSize="20" fontWeight="bold">
+          {" "}
+        </Text>
         <IconButton
           icon={
-            <Icon size="md" as={MaterialIcons} name="settings" color={darkMode ? "white" : "black"} />
+            <Icon
+              size="md"
+              as={MaterialIcons}
+              name="settings"
+              color={darkMode ? "white" : "black"}
+            />
           }
           onPress={() => navigation.navigate("Setting")}
         />
       </HStack>
     </>
-  );
+  )
 }
 
 // 홈 페이지 컴포넌트
 function HomePage({ navigation }) {
-  const [nickname, setNickname] = useState(""); // 닉네임 상태 관리
-  const toast = useToast(); // 토스트 메시지 기능 활용
-  const { darkMode } = useAppContext(); // darkMode 상태 가져오기
+  const [nickname, setNickname] = useState("") // 닉네임 상태 관리
+  const toast = useToast() // 토스트 메시지 기능 활용
+  const { darkMode } = useAppContext() // darkMode 상태 가져오기
 
   // 채팅 페이지로 이동 처리 함수
   const gotoChatPage = () => {
@@ -54,11 +66,11 @@ function HomePage({ navigation }) {
         title: "Please enter your nickname!",
         status: "warning",
         color: "red",
-      });
+      })
     } else {
-      navigation.navigate("Chat"); // 닉네임이 입력된 경우 채팅 페이지로 이동
+      navigation.navigate("Chat") // 닉네임이 입력된 경우 채팅 페이지로 이동
     }
-  };
+  }
 
   return (
     <View style={{ flex: 1, backgroundColor: darkMode ? "#333" : "#f5f5f5" }}>
@@ -70,7 +82,7 @@ function HomePage({ navigation }) {
           <Center>
             <VStack space="3">
               <Heading mb="3" color={darkMode ? "white" : "black"}>
-                Welcome to MAET!
+                <Text>Welcome to MAET!</Text>
               </Heading>
               <Text color={darkMode ? "lightgray" : "gray"}>
                 MAET is a nickname-based chat app! Enter your nickname and start
@@ -85,7 +97,11 @@ function HomePage({ navigation }) {
                 placeholderTextColor={darkMode ? "lightgray" : "gray"}
                 color={darkMode ? "white" : "black"}
               />
-              <Button mb="4" onPress={gotoChatPage} backgroundColor={darkMode ? "#555" : "#0084ff"}>
+              <Button
+                mb="4"
+                onPress={gotoChatPage}
+                backgroundColor={darkMode ? "#555" : "#0084ff"}
+              >
                 <Text color="white">Go To Chat!</Text>
               </Button>
             </VStack>
@@ -93,7 +109,7 @@ function HomePage({ navigation }) {
         </KeyboardAvoidingView>
       </View>
     </View>
-  );
+  )
 }
 
 // 스타일 정의를 위한 StyleSheet 객체
@@ -123,6 +139,6 @@ const styles = StyleSheet.create({
     maxW: "800",
     padding: 2,
   },
-});
+})
 
-export default HomePage;
+export default HomePage

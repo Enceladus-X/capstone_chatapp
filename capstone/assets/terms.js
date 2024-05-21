@@ -55,6 +55,6 @@ const termsAndConditions = {
   
     저희 채팅 애플리케이션을 이용해 주셔서 감사합니다.
     `,
-};
+} 
 
-export default termsAndConditions;
+export default termsAndConditions 
