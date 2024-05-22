@@ -1,24 +1,23 @@
-import React, { useState, useEffect } from "react"
-import { GiftedChat, Bubble, InputToolbar, Composer, Send } from "react-native-gifted-chat"
-import { useAppContext } from "../AppContext" // AppContext 훅 사용
-import { View, StyleSheet, StatusBar, SafeAreaView, TouchableOpacity } from "react-native"
-import { MaterialIcons } from "@expo/vector-icons"
-import { Text } from "native-base" // NativeBase의 Text 컴포넌트를 사용합니다.
+import React, { useState, useEffect } from "react";
+import { GiftedChat, Bubble, InputToolbar, Composer, Send } from "react-native-gifted-chat";
+import { useAppContext } from "../AppContext"; // AppContext 훅 사용
+import { View, StyleSheet, Text, StatusBar, SafeAreaView, TouchableOpacity } from "react-native";
+import { MaterialIcons } from "@expo/vector-icons";
 
 const Chat = ({ navigation }) => {
-  const { darkMode } = useAppContext() // 다크 모드 상태 가져오기
-  const [messages, setMessages] = useState([])
+  const { darkMode } = useAppContext(); // 다크 모드 상태 가져오기
+  const [messages, setMessages] = useState([]);
 
   useEffect(() => {
     // 초기 채팅 메시지 설정
-    setMessages([])
-  }, [])
+    setMessages([]);
+  }, []);
 
   const onSend = (newMessages = []) => {
     setMessages((prevMessages) =>
       GiftedChat.append(prevMessages, newMessages)
-    )
-  }
+    );
+  };
 
   // 말풍선 스타일을 조정하는 함수
   const renderBubble = (props) => {
@@ -44,8 +43,8 @@ const Chat = ({ navigation }) => {
           },
         }}
       />
-    )
-  }
+    );
+  };
 
   // 입력 도구 모음 스타일을 조정하는 함수
   const renderInputToolbar = (props) => {
@@ -59,8 +58,8 @@ const Chat = ({ navigation }) => {
         }}
         primaryStyle={{ alignItems: "center" }}
       />
-    )
-  }
+    );
+  };
 
   // 채팅 입력 필드 스타일을 조정하는 함수
   const renderComposer = (props) => {
@@ -76,8 +75,8 @@ const Chat = ({ navigation }) => {
           padding: 10,
         }}
       />
-    )
-  }
+    );
+  };
 
   // Send 버튼 스타일을 조정하는 함수
   const renderSend = (props) => {
@@ -96,15 +95,15 @@ const Chat = ({ navigation }) => {
       >
         <MaterialIcons name="send" size={24} color="#fff" />
       </Send>
-    )
-  }
+    );
+  };
 
   return (
     <View style={[styles.container, { backgroundColor: darkMode ? "#333" : "#fff" }]}>
       <StatusBar barStyle={darkMode ? "light-content" : "dark-content"} />
       <SafeAreaView>
         <View style={[styles.header, { backgroundColor: darkMode ? "#444" : "#fff", borderBottomColor: darkMode ? "#555" : "#e0e0e0", borderBottomWidth: 1 }]}>
-          <TouchableOpacity onPress={() => navigation.goBack()}>
+          <TouchableOpacity onPress={() => navigation.navigate("Home", { fromChat: true })}>
             <MaterialIcons name="arrow-back" size={24} color={darkMode ? "#fff" : "#000"} />
           </TouchableOpacity>
           <Text style={[styles.headerText, { color: darkMode ? "#fff" : "#000" }]}>Chat</Text>
@@ -120,8 +119,8 @@ const Chat = ({ navigation }) => {
         user={{ _id: 1 }}
       />
     </View>
-  )
-}
+  );
+};
 
 const styles = StyleSheet.create({
   container: {
@@ -137,6 +136,6 @@ const styles = StyleSheet.create({
     fontSize: 20,
     marginLeft: 10,
   },
-})
+});
 
-export default Chat
+export default Chat;
