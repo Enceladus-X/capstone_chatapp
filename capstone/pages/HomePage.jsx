@@ -13,7 +13,7 @@ import {
   Heading,
   Input,
   useToast,
-  Slider,
+  useDisclose,
   Modal,
 } from "native-base";
 import React, { useState, useEffect } from "react";
@@ -56,61 +56,32 @@ function AppBar_Home({ navigation }) {
 }
 
 // 홈 페이지 컴포넌트
-function HomePage({ navigation, route }) {
+function HomePage({ navigation }) {
   const [nickname, setNickname] = useState(""); // 닉네임 상태 관리
-  const [maetPoint, setMaetPoint] = useState(0); // Maet Point 상태 관리
-  const [isModalVisible, setIsModalVisible] = useState(false); // Modal 상태 관리
-  const [selectedPoint, setSelectedPoint] = useState(0); // 선택한 Maet Point 상태 관리
+  const [maetPoint, setMaetPoint] = useState(0); // 메이트 포인트 상태 관리
   const toast = useToast(); // 토스트 메시지 기능 활용
   const { darkMode } = useAppContext(); // darkMode 상태 가져오기
+  const { isOpen, onOpen, onClose } = useDisclose(); // 모달 상태 관리
 
-  // Maet Point 로드 함수
   useEffect(() => {
-    const loadMaetPoint = async () => {
-      try {
-        const storedMaetPoint = await AsyncStorage.getItem("maetPoint");
-        if (storedMaetPoint !== null) {
-          setMaetPoint(JSON.parse(storedMaetPoint));
-        }
-      } catch (error) {
-        console.error("Failed to load maet point", error);
-      }
-    };
+    // 메이트 포인트 로드
     loadMaetPoint();
+  }, []);
 
-    if (route.params?.fromChat) {
-      setIsModalVisible(true); // 채팅 페이지에서 돌아온 경우 모달 표시
-    }
-  }, [route.params?.fromChat]);
-
-  // Maet Point 저장 함수
-  const saveMaetPoint = async (newPoint) => {
-    try {
-      await AsyncStorage.setItem("maetPoint", JSON.stringify(newPoint));
-      setMaetPoint(newPoint);
-    } catch (error) {
-      console.error("Failed to save maet point", error);
-    }
+  const loadMaetPoint = async () => {
+    const point = await AsyncStorage.getItem("maetPoint");
+    if (point !== null) setMaetPoint(JSON.parse(point));
   };
 
-  // Maet Point 평가 함수
-  const handleEvaluate = () => {
-    const updatedMaetPoint = maetPoint + selectedPoint;
-    saveMaetPoint(updatedMaetPoint);
-    setIsModalVisible(false);
-  };
-
-  // 채팅 페이지로 이동 처리 함수
   const gotoChatPage = () => {
     if (!nickname) {
       toast.show({
-        // 닉네임 입력 안할 경우 경고 토스트 출력
         title: "Please enter your nickname!",
         status: "warning",
         color: "red",
       });
     } else {
-      navigation.navigate("Chat"); // 닉네임이 입력된 경우 채팅 페이지로 이동
+      navigation.navigate("Chat");
     }
   };
 
@@ -146,42 +117,31 @@ function HomePage({ navigation, route }) {
               >
                 <Text color="white">Go To Chat!</Text>
               </Button>
-              <Text style={{ color: darkMode ? "lightgray" : "gray", fontSize: 16 }}>
-                Maet Point: {maetPoint}
-              </Text>
             </VStack>
           </Center>
         </KeyboardAvoidingView>
       </View>
-
-      {/* Maet Point 평가 모달 */}
-      <Modal isOpen={isModalVisible} onClose={() => setIsModalVisible(false)}>
-        <Modal.Content maxWidth="400px">
+      <View style={styles.maetPointContainer}>
+        
+        <Button variant="link" onPress={onOpen}>
+          <Text color={darkMode ? "white" : "black"}>MAET Point: {maetPoint}</Text>
+        </Button>
+      </View>
+      <Modal isOpen={isOpen} onClose={onClose}>
+        <Modal.Content maxWidth="400px" bg={darkMode ? "#333" : "#fff"}>
           <Modal.CloseButton />
-          <Modal.Header>Evaluate Chat Partner</Modal.Header>
+          <Modal.Header bg={darkMode ? "#333" : "#fff"}>
+            <Text color={darkMode ? "white" : "black"}>What is MAET Point?</Text>
+          </Modal.Header >
           <Modal.Body>
-            <Text>How was your chat experience?</Text>
-            <Slider
-              defaultValue={0}
-              minValue={-5}
-              maxValue={5}
-              step={1}
-              onChange={(v) => setSelectedPoint(v)}
-            >
-              <Slider.Track>
-                <Slider.FilledTrack />
-              </Slider.Track>
-              <Slider.Thumb />
-            </Slider>
-            <Text>Selected Point: {selectedPoint}</Text>
+            <Text color={darkMode ? "white" : "black"}>
+              MAET Point is a system that allows users to rate their chat partners. After each chat session, you can give a rating between -5 and +5. Your total Maet Point reflects the overall feedback from others.
+            </Text>
           </Modal.Body>
-          <Modal.Footer>
-            <Button.Group space={2}>
-              <Button variant="ghost" onPress={() => setIsModalVisible(false)}>
-                Cancel
-              </Button>
-              <Button onPress={handleEvaluate}>Save</Button>
-            </Button.Group>
+          <Modal.Footer bg={darkMode ? "#333" : "#fff"}>
+            <Button onPress={onClose} bg={darkMode ? "#555" : "#0084ff"}>
+              <Text color="white">Close</Text>
+            </Button>
           </Modal.Footer>
         </Modal.Content>
       </Modal>
@@ -215,6 +175,12 @@ const styles = StyleSheet.create({
     w: "100%",
     maxW: "800",
     padding: 2,
+  },
+  maetPointContainer: {
+    position: "absolute",
+    left: 16,
+    bottom: 16,
+    alignItems: "flex-start",
   },
 });
 

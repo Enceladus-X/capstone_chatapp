@@ -49,22 +49,39 @@ function SettingPage() {
       const jsonValue = JSON.stringify(settings);
       await AsyncStorage.setItem("settings", jsonValue);
       toast.show({
-        description: "Settings saved.",
+        render: () => (
+          <Box
+            bg={darkMode ? "#333" : "#fff"}
+            px="2"
+            py="1"
+            rounded="sm"
+            mb={5}
+          >
+            <Text color={darkMode ? "#fff" : "#000"}>Settings saved.</Text>
+          </Box>
+        ),
         duration: 1000,
         placement: "top",
-        backgroundColor: darkMode ? "#333" : "#fff",
-        color: darkMode ? "#fff" : "#000",
       });
     } catch (e) {
       toast.show({
-        description: "Failed to save settings.",
+        render: () => (
+          <Box
+            bg={darkMode ? "#333" : "#fff"}
+            px="2"
+            py="1"
+            rounded="sm"
+            mb={5}
+          >
+            <Text color={darkMode ? "#fff" : "#000"}>Failed to save settings.</Text>
+          </Box>
+        ),
         duration: 1000,
         placement: "top",
-        backgroundColor: darkMode ? "#333" : "#fff",
-        color: darkMode ? "#fff" : "#000",
       });
     }
   };
+  
 
   const styles = {
     scrollViewStyle: {
